@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livros - Sistema de Biblioteca</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light min-vh-100 d-flex flex-column">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/dashboard">📚 Sistema de Biblioteca</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span class="navbar-text text-white me-3">
+                            Olá, <%= typeof usuario !== 'undefined' ? usuario : 'Visitante' %>!
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm" href="/logout">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container my-5 height-auto flex-grow-1">
+        <!-- Título -->
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="text-primary fw-bold">Gerenciar Livros</h1>
+                <p class="text-muted">Cadastro e manutenção do acervo</p>
+            </div>
+        </div>
+
+        <!-- Menu de Navegação -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex gap-2 flex-wrap justify-content-center">
+                    <a href="/alunos" class="btn btn-outline-primary">Alunos</a>
+                    <a href="/livros" class="btn btn-primary">Livros</a>
+                    <a href="/emprestar" class="btn btn-outline-primary">Emprestar</a>
+                    <a href="/devolver" class="btn btn-outline-primary">Devolver</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Livros -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Lista de Livros</h5>
+                        <a href="/livros/novo" class="btn btn-light btn-sm">+ Incluir Livro</a>
+                    </div>
+                    <div class="card-body">
+                        <!-- Exemplo de EJS: Loop de dados -->
+                        <% 
+                        /**
+                        const livros = [
+                            { id: 1, isbn: '978-0132350884', titulo: 'Clean Code', autor: 'Robert C. Martin', editora: 'Prentice Hall', paginas: 464 },
+                            { id: 2, isbn: '978-0596517748', titulo: 'JavaScript: The Good Parts', autor: 'Douglas Crockford', editora: "O'Reilly", paginas: 176 },
+                            { id: 3, isbn: '978-0201633610', titulo: 'Design Patterns', autor: 'Gang of Four', editora: 'Addison-Wesley', paginas: 395 },
+                            { id: 4, isbn: '978-0134757599', titulo: 'Refactoring', autor: 'Martin Fowler', editora: 'Addison-Wesley', paginas: 448 },
+                            { id: 5, isbn: '978-0135957059', titulo: 'The Pragmatic Programmer', autor: 'David Thomas', editora: 'Addison-Wesley', paginas: 352 }
+                        ];
+                        **/
+                        %>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ISBN</th>
+                                        <th>Título</th>
+                                        <th>Autor</th>
+                                        <th>Editora</th>
+                                        <th>Páginas</th>
+                                        <th class="text-center">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% livros.forEach(livro => { %>
+                                        <tr>
+                                            <td><%= livro.id %></td>
+                                            <td><%= livro.isbn %></td>
+                                            <td><%= livro.titulo %></td>
+                                            <td><%= livro.autor %></td>
+                                            <td><%= livro.editora %></td>
+                                            <td><%= livro.paginas %></td>
+                                            <td class="text-center">
+                                                <a href="/livros/editar/<%= livro.id %>" class="btn btn-sm btn-warning me-1">Editar</a>
+                                                <a href="/livros/excluir/<%= livro.id %>" class="btn btn-sm btn-danger" onclick="return confirm('Deseja realmente excluir este livro?')">Excluir</a>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="bg-primary text-white text-center py-3 mt-5">
+        <p class="mb-0">© <%= new Date().getFullYear() %> - Sistema de Biblioteca</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

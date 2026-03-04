@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= livro ? 'Editar' : 'Novo' %> Livro - Sistema de Biblioteca</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/dashboard">📚 Sistema de Biblioteca</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span class="navbar-text text-white me-3">
+                            Olá, <%= typeof usuario !== 'undefined' ? usuario : 'Visitante' %>!
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm" href="/logout">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container my-5 flex-grow-1">
+        <!-- Título -->
+        <div class="row mb-4">
+            <div class="col">
+                <!-- Exemplo de EJS: Título dinâmico -->
+                <h1 class="text-primary fw-bold">
+                    <%= livro ? 'Editar Livro' : 'Novo Livro' %>
+                </h1>
+                <p class="text-muted">
+                    <%= livro ? 'Atualize as informações do livro' : 'Cadastre um novo livro no acervo' %>
+                </p>
+            </div>
+        </div>
+
+        <!-- Formulário -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <!-- Exemplo de EJS: Mensagem de erro condicional -->
+                        <% if (typeof erro !== 'undefined' && erro) { %>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <%= erro %>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        <% } %>
+
+                        <!-- Exemplo de EJS: Action do form dinâmico -->
+                        <form action="<%= livro ? '/livros/atualizar/' + livro.id : '/livros/salvar' %>" method="POST">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="isbn" class="form-label">ISBN</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="isbn" 
+                                        name="isbn" 
+                                        placeholder="978-0000000000"
+                                        value="<%= livro ? livro.isbn : '' %>"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="titulo" class="form-label">Título</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="titulo" 
+                                        name="titulo" 
+                                        placeholder="Nome do livro"
+                                        value="<%= livro ? livro.titulo : '' %>"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="autor" class="form-label">Autor</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="autor" 
+                                        name="autor" 
+                                        placeholder="Nome do autor"
+                                        value="<%= livro ? livro.autor : '' %>"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editora" class="form-label">Editora</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="editora" 
+                                        name="editora" 
+                                        placeholder="Nome da editora"
+                                        value="<%= livro ? livro.editora : '' %>"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-4">
+                                    <label for="paginas" class="form-label">Número de Páginas</label>
+                                    <input 
+                                        type="number" 
+                                        class="form-control" 
+                                        id="paginas" 
+                                        name="paginas" 
+                                        placeholder="0"
+                                        value="<%= livro ? livro.paginas : '' %>"
+                                        min="1"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <%= livro ? 'Atualizar' : 'Cadastrar' %>
+                                </button>
+                                <a href="/livros" class="btn btn-secondary">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="bg-primary text-white text-center py-3 mt-5">
+        <p class="mb-0">© <%= new Date().getFullYear() %> - Sistema de Biblioteca</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

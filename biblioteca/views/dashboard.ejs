@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Biblioteca</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#">📚 Sistema de Biblioteca</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span class="navbar-text text-white me-3">
+                            <!-- Exemplo de EJS: Exibir nome do usuário -->
+                            Olá, <%= typeof usuario !== 'undefined' ? usuario : 'Visitante' %>!
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm" href="/logout">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container my-5">
+        <!-- Título -->
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="text-primary fw-bold">Dashboard</h1>
+                <p class="text-muted">Painel de controle da biblioteca</p>
+            </div>
+        </div>
+
+        <!-- Menu de Navegação -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex gap-2 flex-wrap justify-content-center">
+                    <a href="/alunos" class="btn btn-primary">Alunos</a>
+                    <a href="/livros" class="btn btn-primary">Livros</a>
+                    <a href="/emprestar" class="btn btn-primary">Emprestar</a>
+                    <a href="/devolver" class="btn btn-primary">Devolver</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards de Estatísticas -->
+        <div class="row g-4 mb-4">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h3 class="text-primary fw-bold mb-2">2.450</h3>
+                        <p class="text-muted mb-0">Livros no Acervo</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h3 class="text-primary fw-bold mb-2">328</h3>
+                        <p class="text-muted mb-0">Leitores Ativos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h3 class="text-primary fw-bold mb-2">156</h3>
+                        <p class="text-muted mb-0">Empréstimos Ativos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h3 class="text-primary fw-bold mb-2">12</h3>
+                        <p class="text-muted mb-0">Devoluções Atrasadas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela de Dados -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Devoluções Atrasadas</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Exemplo de EJS: Loop de dados -->
+                        <% 
+                        const devolucoes = [
+                            { id: 871, leitor: 'João Silva', livro: 'Clean Code', dataEmprestimo: '05/10/2025', diasAtraso: 10 },
+                            { id: 882, leitor: 'Maria Santos', livro: 'JavaScript: The Good Parts', dataEmprestimo: '08/10/2025', diasAtraso: 7 },
+                            { id: 903, leitor: 'Pedro Oliveira', livro: 'Design Patterns', dataEmprestimo: '10/10/2025', diasAtraso: 5 },
+                            { id: 904, leitor: 'Ana Costa', livro: 'Refactoring', dataEmprestimo: '12/10/2025', diasAtraso: 3 }
+                        ];
+                        %>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Empréstimo</th>
+                                        <th>Leitor</th>
+                                        <th>Livro</th>
+                                        <th>Data de Empréstimo</th>
+                                        <th>Dias em Atraso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% devolucoes.forEach(devolucao => { %>
+                                        <tr>
+                                            <td><%= devolucao.id %></td>
+                                            <td><%= devolucao.leitor %></td>
+                                            <td><%= devolucao.livro %></td>
+                                            <td><%= devolucao.dataEmprestimo %></td>
+                                            <td><span class="badge bg-danger"><%= devolucao.diasAtraso %> dias</span></td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="bg-primary text-white text-center py-3 mt-5">
+        <p class="mb-0">© <%= new Date().getFullYear() %> - Sistema de Biblioteca</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
